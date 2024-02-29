@@ -35,7 +35,7 @@ func sendEmail(toEmail string, name string, appointmentDate string) error {
   </div>`, name, appointmentTime)
 
     message := mail.NewSingleEmail(from, subject, to, "", htmlContent)
-    client := sendgrid.NewSendClient("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")
+    client := sendgrid.NewSendClient("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")
     response, err := client.Send(message)
     if err != nil {
         return err
