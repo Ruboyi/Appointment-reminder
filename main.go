@@ -65,7 +65,7 @@ func main() {
         if err != nil {
             panic(err)
         }
-        now = time.Now()
+        now = time.Now().In(time.FixedZone("UTC+1", 1*60*60))
         initDayBefore := time.Date(now.Year(), now.Month(), now.Day()+1, 0, 0, 0, 0, now.Location())
         endDayBefore := time.Date(now.Year(), now.Month(), now.Day()+1, 23, 59, 59, 0, now.Location())
 
