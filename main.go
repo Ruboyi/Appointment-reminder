@@ -48,6 +48,7 @@ func sendEmail(toEmail string, name string, appointmentDate string) error {
 
 
 func main() {
+    fmt.Println("Iniciando el servicio de recordatorio de citas...")
     for {
         now := time.Now()
         targetTime := time.Date(now.Year(), now.Month(), now.Day(), 21, 00, 0, 0, now.Location())
@@ -84,7 +85,7 @@ func main() {
             if err := rows.Scan(&idUser, &appointmentDate, &name, &email); err != nil {
                 panic(err)
             }
-            fmt.Println(idUser , appointmentDate, name , email)
+            fmt.Println("Enviando correo a: ", email)
             sendEmail(email, name, appointmentDate)
         }
         
