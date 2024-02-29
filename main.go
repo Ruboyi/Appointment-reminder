@@ -35,7 +35,7 @@ func sendEmail(toEmail string, name string, appointmentDate string) error {
   </div>`, name, appointmentTime)
 
     message := mail.NewSingleEmail(from, subject, to, "", htmlContent)
-    client := sendgrid.NewSendClient("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")
+    client := sendgrid.NewSendClient("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")
     response, err := client.Send(message)
     if err != nil {
         return err
@@ -51,7 +51,7 @@ func main() {
     fmt.Println("Iniciando el servicio de recordatorio de citas...")
     for {
         now := time.Now().In(time.FixedZone("UTC+1", 1*60*60))
-        targetTime := time.Date(now.Year(), now.Month(), now.Day(), 22, 30, 0, 0, now.Location())
+        targetTime := time.Date(now.Year(), now.Month(), now.Day(), 23, 19, 0, 0, now.Location())
 
         if now.After(targetTime) {
             targetTime = targetTime.Add(24 * time.Hour)
@@ -87,6 +87,8 @@ func main() {
             }
             fmt.Println("Enviando correo a: ", email)
             sendEmail(email, name, appointmentDate)
+
+            time.Sleep(10 * time.Second)
         }
         
   
