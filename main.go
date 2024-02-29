@@ -51,7 +51,7 @@ func main() {
     fmt.Println("Iniciando el servicio de recordatorio de citas...")
     for {
         now := time.Now().In(time.FixedZone("UTC+1", 1*60*60))
-        targetTime := time.Date(now.Year(), now.Month(), now.Day(), 21, 45, 0, 0, now.Location())
+        targetTime := time.Date(now.Year(), now.Month(), now.Day(), 22, 10, 0, 0, now.Location())
 
         if now.After(targetTime) {
             targetTime = targetTime.Add(24 * time.Hour)
