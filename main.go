@@ -50,8 +50,8 @@ func sendEmail(toEmail string, name string, appointmentDate string) error {
 func main() {
     fmt.Println("Iniciando el servicio de recordatorio de citas...")
     for {
-        now := time.Now()
-        targetTime := time.Date(now.Year(), now.Month(), now.Day(), 21, 00, 0, 0, now.Location())
+        now := time.Now().In(time.FixedZone("UTC+1", 1*60*60))
+        targetTime := time.Date(now.Year(), now.Month(), now.Day(), 21, 30, 0, 0, now.Location())
 
         if now.After(targetTime) {
             targetTime = targetTime.Add(24 * time.Hour)
