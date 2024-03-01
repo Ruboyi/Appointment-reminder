@@ -69,6 +69,7 @@ func sendEmail(toEmail, name, appointmentDate string) error {
 
 func main() {
 	fmt.Println("Iniciando el servicio de recordatorio de citas...")
+    fmt.Println("Hora de envío de recordatorio: ", targetTime)
 	for {
 		now := time.Now().In(time.FixedZone(timezone, getTimezoneOffset(timezone)))
 		targetTimeParts := splitTime(targetTime)
