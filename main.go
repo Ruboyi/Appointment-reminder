@@ -7,7 +7,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/joho/godotenv"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 
@@ -22,15 +21,14 @@ var (
 )
 
 func init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
 	apiKey = os.Getenv("API_KEY_SENDGRID")
 	sqlAlchemyURI = os.Getenv("SQL_ALCHEMY_DATABASE_URI")
 	targetTime = os.Getenv("TARGET_TIME")
 	timezone = os.Getenv("TIMEZONE")
+
+	if apiKey == "" || sqlAlchemyURI == "" || targetTime == "" || timezone == "" {
+		log.Fatal("Please set all required environment variables")
+	}
 }
 
 func sendEmail(toEmail, name, appointmentDate string) error {
