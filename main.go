@@ -81,7 +81,8 @@ func main() {
         fmt.Sscanf(targetHour, "%d", &targetTimeParts[0])
         fmt.Sscanf(targetMinute, "%d", &targetTimeParts[1])
 
-        targetTime := time.Date(now.Year(), now.Month(), now.Day(), targetTimeParts[0], targetTimeParts[1], 0, 0, now.Location())
+        targetTime := time.Date(now.Year(), now.Month(), now.Day(), targetTimeParts[0], targetTimeParts[1], 0, 0, time.FixedZone(timezone, 0))
+
         fmt.Println("Target time: ", targetTime)
 		if now.After(targetTime) {
 			targetTime = targetTime.Add(24 * time.Hour)
