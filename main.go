@@ -126,7 +126,6 @@ func main() {
 			fmt.Println("Enviando correo a: ", email)
 			sendEmail(email, name, appointmentDate)
 
-			time.Sleep(10 * time.Second)
 		}
 
         rows.Close()
