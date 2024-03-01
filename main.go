@@ -73,6 +73,9 @@ func main() {
 	for {
 		now := time.Now().In(time.FixedZone(timezone, getTimezoneOffset(timezone)))
 		targetTimeParts := splitTime(targetTime)
+        fmt.Println("targetTimeParts: ", targetTimeParts)
+        fmt.Println("targetTimeParts0: ", targetTimeParts[0])
+        fmt.Println("targetTimeParts1: ", targetTimeParts[1])
 		targetTime := time.Date(now.Year(), now.Month(), now.Day(), targetTimeParts[0], targetTimeParts[1], 0, 0, now.Location())
 
 		if now.After(targetTime) {
