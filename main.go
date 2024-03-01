@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -19,7 +17,8 @@ import (
 var (
 	apiKey            string
 	sqlAlchemyURI     string
-	targetTime        string
+    targetHour        string
+    targetMinute      string
 	timezone          string
 )
 
@@ -31,7 +30,8 @@ func init() {
 
 	apiKey = os.Getenv("API_KEY_SENDGRID")
 	sqlAlchemyURI = os.Getenv("SQL_ALCHEMY_DATABASE_URI")
-	targetTime = os.Getenv("TARGET_TIME")
+    targetHour = os.Getenv("TARGET_HOUR")
+    targetMinute = os.Getenv("TARGET_MINUTE")
 	timezone = os.Getenv("TIMEZONE")
 }
 
@@ -73,9 +73,12 @@ func main() {
 	fmt.Println("Iniciando el servicio de recordatorio de citas...")
 	for {
 		now := time.Now().In(time.FixedZone(timezone, getTimezoneOffset(timezone)))
-		targetTimeParts := splitTime(targetTime)
-        fmt.Println("Target time: ", targetTimeParts)
-		targetTime := time.Date(now.Year(), now.Month(), now.Day(), targetTimeParts[0], targetTimeParts[1], 0, 0, now.Location())
+		
+        targetTimeParts := []int{0, 0}
+        fmt.Sscanf(targetHour, "%d", &targetTimeParts[0])
+        fmt.Sscanf(targetMinute, "%d", &targetTimeParts[1])
+
+        targetTime := time.Date(now.Year(), now.Month(), now.Day(), targetTimeParts[0], targetTimeParts[1], 0, 0, now.Location())
 
 		if now.After(targetTime) {
 			targetTime = targetTime.Add(24 * time.Hour)
@@ -124,21 +127,3 @@ func getTimezoneOffset(zone string) int {
 	return offset
 }
 
-func splitTime(timeStr string) []int {
-    timeParts := strings.Split(timeStr, ":")
-    if len(timeParts) != 2 {
-        log.Fatalf("Error parsing time: invalid format")
-    }
-    
-    hours, err := strconv.Atoi(timeParts[0])
-    if err != nil {
-        log.Fatalf("Error parsing hours: %s", err)
-    }
-    
-    minutes, err := strconv.Atoi(timeParts[1])
-    if err != nil {
-        log.Fatalf("Error parsing minutes: %s", err)
-    }
-    
-    return []int{hours, minutes}
-}
