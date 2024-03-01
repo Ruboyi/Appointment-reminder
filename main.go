@@ -74,7 +74,7 @@ func main() {
     fmt.Println("Hora objetivo: ", targetHour + ":" + targetMinute)
 	for {
         fmt.Println("Esperando a la hora objetivo...")
-		now := time.Now().In(time.FixedZone(timezone, getTimezoneOffset(timezone)))
+        now := time.Now().In(time.FixedZone(timezone, 0)) 
         fmt.Println("Hora actual: ", now)
 		
         targetTimeParts := []int{0, 0}
@@ -98,7 +98,7 @@ func main() {
 			panic(err)
 		}
         fmt.Println("Conexión exitosa")
-		now = time.Now().In(time.FixedZone(timezone, getTimezoneOffset(timezone)))
+        now = time.Now().In(time.FixedZone(timezone, 0)) 
 		initDayBefore := time.Date(now.Year(), now.Month(), now.Day()+1, 0, 0, 0, 0, now.Location())
 		endDayBefore := time.Date(now.Year(), now.Month(), now.Day()+1, 23, 59, 59, 0, now.Location())
 
@@ -134,8 +134,4 @@ func main() {
 
 }
 
-func getTimezoneOffset(zone string) int {
-	_, offset := time.Now().In(time.FixedZone(zone, 0)).Zone()
-	return offset
-}
 
