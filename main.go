@@ -74,14 +74,15 @@ func main() {
     fmt.Println("Hora objetivo: ", targetHour + ":" + targetMinute)
 	for {
         fmt.Println("Esperando a la hora objetivo...")
-        now := time.Now().In(time.FixedZone(timezone, 0)) 
+        loc, _ := time.LoadLocation(timezone)
+        now := time.Now().In(loc)
         fmt.Println("Hora actual: ", now)
 		
         targetTimeParts := []int{0, 0}
         fmt.Sscanf(targetHour, "%d", &targetTimeParts[0])
         fmt.Sscanf(targetMinute, "%d", &targetTimeParts[1])
 
-        targetTime := time.Date(now.Year(), now.Month(), now.Day(), targetTimeParts[0], targetTimeParts[1], 0, 0, time.FixedZone(timezone, 0))
+        targetTime := time.Date(now.Year(), now.Month(), now.Day(), targetTimeParts[0], targetTimeParts[1], 0, 0, now.Location())
 
         fmt.Println("Target time: ", targetTime)
 		if now.After(targetTime) {
@@ -99,7 +100,7 @@ func main() {
 			panic(err)
 		}
         fmt.Println("Conexión exitosa")
-        now = time.Now().In(time.FixedZone(timezone, 0)) 
+        now = time.Now().In(loc)
 		initDayBefore := time.Date(now.Year(), now.Month(), now.Day()+1, 0, 0, 0, 0, now.Location())
 		endDayBefore := time.Date(now.Year(), now.Month(), now.Day()+1, 23, 59, 59, 0, now.Location())
 
