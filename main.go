@@ -75,6 +75,7 @@ func main() {
 	for {
         fmt.Println("Esperando a la hora objetivo...")
 		now := time.Now().In(time.FixedZone(timezone, getTimezoneOffset(timezone)))
+        fmt.Println("Hora actual: ", now)
 		
         targetTimeParts := []int{0, 0}
         fmt.Sscanf(targetHour, "%d", &targetTimeParts[0])
