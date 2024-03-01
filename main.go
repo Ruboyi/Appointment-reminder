@@ -74,8 +74,12 @@ func main() {
     fmt.Println("Hora objetivo: ", targetHour + ":" + targetMinute)
 	for {
         fmt.Println("Esperando a la hora objetivo...")
-        loc, _ := time.LoadLocation(timezone)
+        loc, err := time.LoadLocation(timezone)
+        if err != nil {
+            panic(err)
+        }
         now := time.Now().In(loc)
+     
         fmt.Println("Hora actual: ", now)
 		
         targetTimeParts := []int{0, 0}
