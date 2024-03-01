@@ -122,10 +122,11 @@ func getTimezoneOffset(zone string) int {
 }
 
 func splitTime(timeStr string) []int {
-	var hours, minutes int
-	n, err := fmt.Sscanf(timeStr, "%d:%d", &hours, &minutes)
-	if err != nil || n != 2 {
-		log.Fatalf("Error parsing time: %s", err)
-	}
-	return []int{hours, minutes}
+    var hours, minutes int
+    _, err := fmt.Sscanf(timeStr, "%d:%d", &hours, &minutes)
+    if err != nil {
+        log.Fatalf("Error parsing time: %s", err)
+    }
+    return []int{hours, minutes}
 }
+
